@@ -1,2 +1,3 @@
-# litemall-master
+Java大作业
+电商平台项目
 邦妮筛
