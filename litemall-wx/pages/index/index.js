@@ -16,13 +16,16 @@ Page({
     banner: [],
     channel: [],
     coupon: [],
-    goodsCount: 0
+    goodsCount: 0,
+    chatMessages: [],
+    inputMessage: '',
+    scrollTop: 0
   },
 
   onShareAppMessage: function() {
     return {
-      title: 'litemall小程序商场',
-      desc: '开源微信小程序商城',
+      title: '邦妮小程序商场',
+      desc: '微信小程序商城',
       path: '/pages/index/index'
     }
   },
@@ -138,4 +141,38 @@ Page({
       }
     })
   },
+  onInput(e) {
+    this.setData({
+      inputMessage: e.detail.value
+    });
+  },
+  sendMessage() {
+    const userMessage = this.data.inputMessage;
+    if (userMessage.trim() === '') return;
+    
+    this.setData({
+      messages: [...this.data.messages, { type: 'user', content: userMessage }],
+      inputMessage: '',
+      scrollTop: this.data.scrollTop + 1000
+    });
+    
+    // 调用大模型接口
+    this.callLargeModel(userMessage);
+  },
+  async callLargeModel(userMessage) {
+    // 预留大模型接口
+    // 示例返回，实际使用时需替换为真实接口调用
+    const response = await new Promise(resolve => {
+      setTimeout(() => {
+        resolve({
+          content: '这是大模型的回复示例，实际使用时需替换为真实接口返回内容。'
+        });
+      }, 1000);
+    });
+    
+    this.setData({
+      messages: [...this.data.messages, { type: 'bot', content: response.content }],
+      scrollTop: this.data.scrollTop + 1000
+    });
+  }
 })
