@@ -1,6 +1,7 @@
 {
   "description": "项目配置文件。",
   "setting": {
+
     "cloud": true ,
     "urlCheck": false,
     "es6": true,
@@ -40,7 +41,6 @@
     "condition": false,
     "swc": false
   },
-
   "cloudfunctionRoot": "cloudfunctions/",
   "compileType": "miniprogram",
   "libVersion": "2.4.0",
