@@ -1,6 +1,7 @@
 {
   "description": "项目配置文件。",
   "setting": {
+    "cloud": true ,
     "urlCheck": false,
     "es6": true,
     "postcss": true,
@@ -14,6 +15,7 @@
     "uglifyFileName": true,
     "checkInvalidKey": true,
     "checkSiteMap": true,
+   
     "uploadWithSourceMap": true,
     "useMultiFrameRuntime": true,
     "useApiHook": true,
@@ -34,9 +36,12 @@
     "useCompilerPlugins": false,
     "ignoreUploadUnusedFiles": true,
     "enhance": true,
+    "cloudfunctionRoot": "cloudfunctions/",
     "condition": false,
     "swc": false
   },
+
+  "cloudfunctionRoot": "cloudfunctions/",
   "compileType": "miniprogram",
   "libVersion": "2.4.0",
   "appid": "wxbb967f0038904f70",
@@ -334,5 +339,6 @@
   "editorSetting": {
     "tabIndent": "insertSpaces",
     "tabSize": 2
-  }
+  },
+  "cloudfunctionTemplateRoot": "cloudfunctionTemplate/"
 }
