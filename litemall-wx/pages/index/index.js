@@ -182,7 +182,6 @@ Page({
         })
       }
     })
-=======
     const userMessage = this.data.inputMessage;
     if (userMessage.trim() === '') return;
     
