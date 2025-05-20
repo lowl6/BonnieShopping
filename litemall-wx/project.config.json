@@ -1,10 +1,7 @@
 {
   "description": "项目配置文件。",
   "setting": {
-<<<<<<< Updated upstream
-=======
     "cloud": true,
->>>>>>> Stashed changes
     "urlCheck": false,
     "es6": true,
     "postcss": true,
@@ -41,10 +38,7 @@
     "condition": false,
     "swc": false
   },
-<<<<<<< Updated upstream
-=======
   "cloudfunctionRoot": "cloudfunctions/",
->>>>>>> Stashed changes
   "compileType": "miniprogram",
   "libVersion": "2.4.0",
   "appid": "wxbb967f0038904f70",
