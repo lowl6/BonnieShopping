@@ -61,7 +61,6 @@ Page({
     });
   },
   onLoad: function(options) {
-
     // 页面初始化 options为页面跳转所带来的参数
     if (options.scene) {
       //这个scene的值存在则证明首页的开启来源于朋友圈分享的图,同时可以通过获取到的goodId的值跳转导航到对应的详情页
@@ -147,6 +146,43 @@ Page({
     });
   },
   sendMessage() {
+    const message = this.data.inputMessage.trim()
+    if (!message) return
+
+    // 添加用户消息
+    const newMessages = [...this.data.chatMessages, 
+      { type: 'user', content: message }
+    ]
+    this.setData({
+      chatMessages: newMessages,
+      inputMessage: '',
+      scrollTop: 99999
+    })
+
+    // 调用云函数
+    wx.cloud.callFunction({
+      name: 'chat',
+      data: { message: message },
+      success: res => {
+        const content = res.result.code === 0 ? 
+          res.result.content : '邦妮走神了，请再说一次~'
+        
+        this.setData({
+          chatMessages: [...newMessages, 
+            { type: 'bot', content: content }
+          ],
+          scrollTop: 99999
+        })
+      },
+      fail: err => {
+        this.setData({
+          chatMessages: [...newMessages, 
+            { type: 'bot', content: '网络开小差了，请检查网络后重试' }
+          ]
+        })
+      }
+    })
+=======
     const userMessage = this.data.inputMessage;
     if (userMessage.trim() === '') return;
     

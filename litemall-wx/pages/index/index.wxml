@@ -1,5 +1,51 @@
-<!-- index.wxml -->
 <view class="container">
+  <!-- 原有顶部搜索栏 -->
+  <view class="search">
+    <navigator url="/pages/search/search" class="input">
+      <van-icon name="search" />
+      <text class="txt">商品搜索</text>
+    </navigator>
+  </view>
+
+  <!-- 原有其他内容 -->
+  <view style="text-align: center;">
+    <text class="txt">你好呀！请问想要什么样的衣服，邦妮帮你筛~</text>
+  </view>
+  <view class="image-container">
+    <image 
+      style="width: 750rpx; height: 754rpx;" 
+      src="/static/gif/挥手.gif" 
+      mode="aspectFit" 
+    />
+  </view>
+  <!-- 聊天区域 -->
+  <view class="chat-container">
+    <scroll-view 
+      class="chat-messages" 
+      scroll-y 
+      scroll-top="{{scrollTop}}"
+      style="height: 20vh;"
+    >
+      <block wx:for="{{chatMessages}}" wx:key="index">
+        <view class="message {{item.type}}">
+          <text>{{item.content}}</text>
+        </view>
+      </block>
+    </scroll-view>
+
+    <view class="chat-input">
+      <input 
+        class="input-field"
+        placeholder="和邦妮聊天..." 
+        value="{{inputMessage}}"
+        bindinput="onInput"
+        bindconfirm="sendMessage"
+        confirm-type="send"
+      />
+      <button class="send-button" bindtap="sendMessage">发送</button>
+    </view>
+  </view>
+
     <view class="search">
         <navigator url="/pages/search/search" class="input">
             <van-icon name="search" />

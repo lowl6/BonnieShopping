@@ -35,6 +35,7 @@
     "useCompilerPlugins": false,
     "ignoreUploadUnusedFiles": true,
     "enhance": true,
+    "cloudfunctionRoot": "cloudfunctions/",
     "condition": false,
     "swc": false
   },
@@ -336,5 +337,6 @@
   "editorSetting": {
     "tabIndent": "insertSpaces",
     "tabSize": 2
-  }
+  },
+  "cloudfunctionTemplateRoot": "cloudfunctionTemplate/"
 }

@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "axios": "^1.9.0",
+    "wx-server-sdk": "^3.0.1"
+  },
+  "name": "chat",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
