@@ -12,6 +12,7 @@ App({
   /**
    * 小程序初始化完成时触发，全局只触发一次
    */
+  
   onLaunch() {
     // 扩展 Promise 原型添加 finally 方法
     wx.cloud.init({
@@ -27,7 +28,11 @@ App({
         );
       };
     }
-    
+    // app.js 初始化云开发
+  wx.cloud.init({
+  env: 'cloud1-5gpcfxile193e298',  // 在微信云控制台获取
+  traceUser: true
+  });
     // 处理小程序版本更新
     const updateManager = wx.getUpdateManager();
     
@@ -75,8 +80,3 @@ App({
     hasLogin: false
   }
 });    
-// app.js 初始化云开发
-wx.cloud.init({
-  env: '你的云环境ID',  // 在微信云控制台获取
-  traceUser: true
-})

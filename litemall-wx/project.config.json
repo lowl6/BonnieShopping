@@ -1,7 +1,7 @@
 {
   "description": "项目配置文件。",
   "setting": {
-    "cloud": true ,
+    "cloud": true,
     "urlCheck": false,
     "es6": true,
     "postcss": true,
@@ -15,7 +15,6 @@
     "uglifyFileName": true,
     "checkInvalidKey": true,
     "checkSiteMap": true,
-   
     "uploadWithSourceMap": true,
     "useMultiFrameRuntime": true,
     "useApiHook": true,
@@ -38,12 +37,14 @@
     "enhance": true,
     "cloudfunctionRoot": "cloudfunctions/",
     "condition": false,
-    "swc": false
+    "swc": false,
+    "compileWorklet": false,
+    "localPlugins": false,
+    "disableSWC": true
   },
-
   "cloudfunctionRoot": "cloudfunctions/",
   "compileType": "miniprogram",
-  "libVersion": "2.4.0",
+  "libVersion": "3.8.1",
   "appid": "wxbb967f0038904f70",
   "projectname": "litemall-wx",
   "simulatorType": "wechat",

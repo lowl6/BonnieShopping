@@ -7,9 +7,33 @@ cloud.init({
   env: cloud.DYNAMIC_CURRENT_ENV
 })
 
+// ▼▼▼▼▼▼▼▼▼▼ 修改点1：将测试函数移到主函数外部 ▼▼▼▼▼▼▼▼▼▼
+const testConnectivity = async () => {
+  try {
+    const start = Date.now()
+    await axios.get('https://api.deepseek.com', { timeout: 5000 })
+    console.log(`网络延迟: ${Date.now() - start}ms`)
+    return true
+  } catch (err) {
+    console.error('网络诊断失败:', err.message)
+    return false
+  }
+}
+
 // 配置文件
 const { API_KEY } = require('./config')
+
+// ▼▼▼▼▼▼▼▼▼▼ 修改点2：移除顶层的await调用 ▼▼▼▼▼▼▼▼▼▼
 exports.main = async (event) => {
+  // ▼▼▼▼▼▼▼▼▼▼ 新增网络检查调用 ▼▼▼▼▼▼▼▼▼▼
+  const connectionStatus = await testConnectivity()
+  if (!connectionStatus) {
+    return { 
+      code: -1,
+      content: '网络连接异常，请检查服务状态'
+    }
+  }
+
   try {
     // 确保 event.message 存在且非空
     if (!event.message?.trim()) {
@@ -25,7 +49,7 @@ exports.main = async (event) => {
         },
         {
           role: "user",
-          content: event.message // 确保这里传递了有效内容
+          content: event.message
         }
       ],
       stream: false
@@ -40,7 +64,7 @@ exports.main = async (event) => {
     return { code: 0, content: response.data.choices[0].message.content }
   } catch (error) {
     console.error('完整错误信息:', {
-      requestData: error.config?.data, // 打印实际发送的请求体
+      requestData: error.config?.data,
       response: error.response?.data
     })
     return { 

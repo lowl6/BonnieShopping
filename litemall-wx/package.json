@@ -1,0 +1,24 @@
+{
+  "name": "litemall-wx",
+  "version": "1.0.0",
+  "main": "app.js",
+  "directories": {
+    "lib": "lib"
+  },
+    "scripts": {
+      "dev": "echo '请使用微信开发者工具打开项目' && exit 0",
+      "build": "echo '请使用微信开发者工具构建项目' && exit 0"
+    },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@vue/cli-service": "^5.0.8"
+  },
+  "dependencies": {
+    "vue": "^3.2.47",
+    "vue-router": "^4.1.6",
+    "axios": "^1.4.0"
+  }
+}
