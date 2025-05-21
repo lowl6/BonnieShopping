@@ -164,6 +164,7 @@ Page({
       name: 'chat',
       data: { message: message },
       success: res => {
+        console.log('[云函数原始响应]', JSON.stringify(res, null, 2)) // 新增详细日志
         const content = res.result.code === 0 ? 
           res.result.content : '邦妮走神了，请再说一次~'
         

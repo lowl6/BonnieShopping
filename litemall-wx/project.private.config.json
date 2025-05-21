@@ -1,236 +1,25 @@
 {
   "setting": {
-    "compileHotReLoad": true
+    "compileHotReLoad": true,
+    "urlCheck": false,
+    "coverView": true,
+    "lazyloadPlaceholderEnable": false,
+    "skylineRenderEnable": false,
+    "preloadBackgroundData": false,
+    "autoAudits": false,
+    "useApiHook": true,
+    "useApiHostProcess": true,
+    "showShadowRootInWxmlPanel": true,
+    "useStaticServer": false,
+    "useLanDebug": false,
+    "showES6CompileOption": false,
+    "checkInvalidKey": true,
+    "ignoreDevUnusedFiles": true,
+    "bigPackageSizeSupport": false,
+    "useIsolateContext": true
   },
-  "condition": {
-    "miniprogram": {
-      "list": [
-        {
-          "name": "首页",
-          "pathName": "pages/index/index",
-          "query": ""
-        },
-        {
-          "name": "专题",
-          "pathName": "pages/topic/topic",
-          "query": ""
-        },
-        {
-          "name": "专题详情",
-          "pathName": "pages/topicDetail/topicDetail",
-          "query": "id=314"
-        },
-        {
-          "name": "专题评论列表",
-          "pathName": "pages/topicComment/topicComment",
-          "query": "valueId=314&type=1"
-        },
-        {
-          "name": "专题评论添加",
-          "pathName": "pages/topicCommentPost/topicCommentPost",
-          "query": "valueId=314&type=1"
-        },
-        {
-          "name": "品牌",
-          "pathName": "pages/brand/brand",
-          "query": ""
-        },
-        {
-          "name": "品牌详情",
-          "pathName": "pages/brandDetail/brandDetail",
-          "query": "id=1001000"
-        },
-        {
-          "name": "人气推荐",
-          "pathName": "pages/hotGoods/hotGoods",
-          "query": ""
-        },
-        {
-          "name": "新品首发",
-          "pathName": "pages/newGoods/newGoods",
-          "query": ""
-        },
-        {
-          "name": "分类",
-          "pathName": "pages/catalog/catalog",
-          "query": ""
-        },
-        {
-          "name": "分类详情",
-          "pathName": "pages/category/category",
-          "query": "id=1008002"
-        },
-        {
-          "name": "查找",
-          "pathName": "pages/search/search",
-          "query": ""
-        },
-        {
-          "name": "商品",
-          "pathName": "pages/goods/goods",
-          "query": "id=1181267",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "商品评论列表",
-          "pathName": "pages/comment/comment",
-          "query": "valueId=1181000&type=0"
-        },
-        {
-          "name": "购物车",
-          "pathName": "pages/cart/cart",
-          "query": ""
-        },
-        {
-          "name": "下单",
-          "pathName": "pages/checkout/checkout",
-          "query": ""
-        },
-        {
-          "name": "支付结果",
-          "pathName": "pages/payResult/payResult",
-          "query": ""
-        },
-        {
-          "name": "我的",
-          "pathName": "pages/ucenter/index/index",
-          "query": ""
-        },
-        {
-          "name": "我的订单列表",
-          "pathName": "pages/ucenter/order/order",
-          "query": ""
-        },
-        {
-          "name": "我的订单详情",
-          "pathName": "pages/ucenter/orderDetail/orderDetail",
-          "query": "id=1"
-        },
-        {
-          "name": "待评价的订单详情",
-          "pathName": "pages/ucenter/orderDetail/orderDetail",
-          "query": "id=1"
-        },
-        {
-          "name": "购买商品评价",
-          "pathName": "pages/commentPost/commentPost",
-          "query": "orderId=2&type=0&valueId=1116011"
-        },
-        {
-          "name": "我的优惠券",
-          "pathName": "pages/ucenter/couponList/couponList",
-          "query": ""
-        },
-        {
-          "name": "我的收藏",
-          "pathName": "pages/ucenter/collect/collect",
-          "query": ""
-        },
-        {
-          "name": "我的足迹",
-          "pathName": "pages/ucenter/footprint/footprint",
-          "query": ""
-        },
-        {
-          "name": "我的地址",
-          "pathName": "pages/ucenter/address/address",
-          "query": ""
-        },
-        {
-          "name": "我的地址添加",
-          "pathName": "pages/ucenter/addressAdd/addressAdd",
-          "query": ""
-        },
-        {
-          "name": "登录",
-          "pathName": "pages/auth/login/login",
-          "query": ""
-        },
-        {
-          "name": "账号登录",
-          "pathName": "pages/auth/accountLogin/accountLogin",
-          "query": ""
-        },
-        {
-          "name": "注册",
-          "pathName": "pages/auth/register/register",
-          "query": ""
-        },
-        {
-          "name": "找回密码",
-          "pathName": "pages/auth/reset/reset",
-          "query": ""
-        },
-        {
-          "name": "关于",
-          "pathName": "pages/about/about",
-          "query": ""
-        },
-        {
-          "name": "测试更新",
-          "pathName": "pages/index/index",
-          "query": ""
-        },
-        {
-          "name": "意见反馈",
-          "pathName": "pages/ucenter/feedback/feedback",
-          "query": ""
-        },
-        {
-          "name": "团购专区",
-          "pathName": "pages/groupon/grouponList/grouponList",
-          "query": ""
-        },
-        {
-          "name": "选择优惠券",
-          "pathName": "pages/ucenter/couponSelect/couponSelect",
-          "query": ""
-        },
-        {
-          "name": "我的优惠券列表",
-          "pathName": "pages/ucenter/couponList/couponList",
-          "query": ""
-        },
-        {
-          "name": "优惠券列表",
-          "pathName": "pages/coupon/coupon",
-          "query": ""
-        },
-        {
-          "name": "帮助中心",
-          "pathName": "pages/help/help",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "我的团购",
-          "pathName": "pages/groupon/myGroupon/myGroupon",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "申请售后",
-          "pathName": "pages/ucenter/aftersale/aftersale",
-          "query": "id=2",
-          "scene": null
-        },
-        {
-          "name": "售后列表",
-          "pathName": "pages/ucenter/aftersaleList/aftersaleList",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "售后详情",
-          "pathName": "pages/ucenter/aftersaleDetail/aftersaleDetail",
-          "query": "id=1",
-          "scene": null
-        }
-      ]
-    }
-  },
-  "libVersion": "3.8.1",
+  "condition": {},
+  "libVersion": "3.8.5",
   "description": "项目私有配置文件。此文件中的内容将覆盖 project.config.json 中的相同字段。项目的改动优先同步到此文件中。详见文档：https://developers.weixin.qq.com/miniprogram/dev/devtools/projectconfig.html",
   "projectname": "litemall-wx"
 }

@@ -37,11 +37,14 @@
     "enhance": true,
     "cloudfunctionRoot": "cloudfunctions/",
     "condition": false,
-    "swc": false
+    "swc": false,
+    "compileWorklet": false,
+    "localPlugins": false,
+    "disableSWC": true
   },
   "cloudfunctionRoot": "cloudfunctions/",
   "compileType": "miniprogram",
-  "libVersion": "2.4.0",
+  "libVersion": "3.8.1",
   "appid": "wxbb967f0038904f70",
   "projectname": "litemall-wx",
   "simulatorType": "wechat",
