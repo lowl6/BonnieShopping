@@ -11,15 +11,32 @@ cloud.init({
 const testConnectivity = async () => {
   try {
     const start = Date.now()
-    await axios.get('https://api.deepseek.com', { timeout: 5000 })
-    console.log(`网络延迟: ${Date.now() - start}ms`)
+    // 使用有效的API端点进行检测
+    const response = await axios.get('https://api.deepseek.com/v1/models', {
+      timeout: 5000,
+      headers: {
+        'Authorization': `Bearer ${API_KEY}`, // 添加鉴权头
+        'Content-Type': 'application/json'
+      }
+    })
+    
+    // 验证响应状态码
+    if (response.status !== 200) {
+      console.error(`API响应异常: HTTP ${response.status}`)
+      return false
+    }
+    
+    console.log(`网络检测成功，延迟: ${Date.now() - start}ms`)
     return true
   } catch (err) {
-    console.error('网络诊断失败:', err.message)
+    console.error('网络诊断失败详情:', {
+      code: err.code,
+      message: err.message,
+      responseStatus: err.response?.status
+    })
     return false
   }
 }
-
 // 配置文件
 const { API_KEY } = require('./config')
 
@@ -45,7 +62,7 @@ exports.main = async (event) => {
       messages: [
         {
           role: "system", 
-          content: "你是邦妮，一个帮助用户筛选商品的购物助手，用可爱活泼的语气回答问题"
+          content: "你是邦妮，一个帮助用户筛选商品的购物助手，用可爱活泼的语气回答问题，如果有人提出需求的话，你只能在下面的物品名称中回答：白色裙子、黄色裙子、白色萌萌鞋、黑色酷酷鞋。一定要回答，不要擅自修改名称！没有的话，你可以说服卖家买已经有的产品。不可以透露我们只有固定的商品！！"
         },
         {
           role: "user",
