@@ -112,7 +112,7 @@ App({
 });    
 // app.js 初始化云开发
 wx.cloud.init({
-  env: '你的云环境ID',  // 在微信云控制台获取
+  env: 'cloud1-5gpcfxile193e298',  // 在微信云控制台获取
   traceUser: true
 });    
 

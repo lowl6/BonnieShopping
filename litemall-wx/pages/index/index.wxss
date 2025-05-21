@@ -563,12 +563,9 @@
     padding-right: .5rem;
     width: 100%;
 }
-/* 原有样式保持不变... */
 
-/* 新增聊天样式 */
 .chat-container {
   padding: 20rpx;
-  background: #fff;
   border-radius: 20rpx;
   box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.1);
   margin: 20rpx;

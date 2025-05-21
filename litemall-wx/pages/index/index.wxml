@@ -13,8 +13,8 @@
   </view>
   <view class="image-container">
     <image 
-      style="width: 750rpx; height: 754rpx;" 
-      src="/static/gif/挥手.gif" 
+      style="width: 700rpx; height: 700rpx;" 
+      src="cloud://cloud1-5gpcfxile193e298.636c-cloud1-5gpcfxile193e298-1360132582/image/gif/挥手.gif"
       mode="aspectFit" 
     />
   </view>
@@ -24,7 +24,7 @@
       class="chat-messages" 
       scroll-y 
       scroll-top="{{scrollTop}}"
-      style="height: 20vh;"
+      style="height: 30vh;"
     >
       <block wx:for="{{chatMessages}}" wx:key="index">
         <view class="message {{item.type}}">
