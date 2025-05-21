@@ -58,7 +58,7 @@
         <text class="txt">你好呀！请问想要什么样的衣服，邦妮帮你筛~</text>
     </view>
     <view class="image-container">
-        <image style="width: 750rpx; height: 754rpx; display: inline-block; box-sizing: border-box" src="/static/gif/挥手.gif" class="home-image" mode="aspectFit" />
+        <image style="width: 750rpx; height: 754rpx; display: inline-block; box-sizing: border-box" src="https://bangni-1360132582.cos.ap-beijing.myqcloud.com/gif/%E6%8C%A5%E6%89%8B.gif" class="home-image" mode="aspectFit" />
     </view>
 
     <!-- <swiper class="banner" indicator-dots="true" autoplay="true" interval="3000" duration="1000">
