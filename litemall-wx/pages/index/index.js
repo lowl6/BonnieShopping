@@ -183,5 +183,32 @@ Page({
         })
       }
     })
+    const userMessage = this.data.inputMessage;
+    if (userMessage.trim() === '') return;
+    
+    this.setData({
+      messages: [...this.data.messages, { type: 'user', content: userMessage }],
+      inputMessage: '',
+      scrollTop: this.data.scrollTop + 1000
+    });
+    
+    // 调用大模型接口
+    this.callLargeModel(userMessage);
+  },
+  async callLargeModel(userMessage) {
+    // 预留大模型接口
+    // 示例返回，实际使用时需替换为真实接口调用
+    const response = await new Promise(resolve => {
+      setTimeout(() => {
+        resolve({
+          content: '这是大模型的回复示例，实际使用时需替换为真实接口返回内容。'
+        });
+      }, 1000);
+    });
+    
+    this.setData({
+      messages: [...this.data.messages, { type: 'bot', content: response.content }],
+      scrollTop: this.data.scrollTop + 1000
+    });
   }
 })
