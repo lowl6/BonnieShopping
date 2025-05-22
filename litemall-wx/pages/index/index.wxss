@@ -585,15 +585,45 @@
 }
 
 .user {
-  background: #f39494;
-  color: white;
+  background: transparent; 
+  color: #000;
   margin-left: auto;
+  border-radius: 16rpx 16rpx 0 16rpx; 
+  position: relative;
+  /* 增大模糊半径和扩散半径，调整透明度 */
+  box-shadow: 0 4rpx 12rpx 2rpx rgba(0, 0, 0, 0.3); 
+  border: 2rpx solid #2196F3; 
+}
+
+.user::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: -12rpx;
+  border-width: 12rpx 0 0 12rpx;
+  border-style: solid;
+  border-color: #e3f2fd transparent transparent transparent;
 }
 
 .bot {
-  background: #f5f5f5;
-  color: #333;
+  background:transparent; 
+  color: #000;
   margin-right: auto;
+  border-radius: 16rpx 16rpx 16rpx 0; 
+  position: relative;
+  /* 增大模糊半径和扩散半径，调整透明度 */
+  box-shadow: 0 4rpx 12rpx 2rpx rgba(0, 0, 0, 0.3); 
+  border: 2rpx solid #fe5b5b; 
+}
+
+.bot::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: -12rpx;
+  border-width: 12rpx 12rpx 0 0;
+  border-style: solid;
+  border-color: #f5f5f5 transparent transparent transparent;
 }
 
 .chat-input {

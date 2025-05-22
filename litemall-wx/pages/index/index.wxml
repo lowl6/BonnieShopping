@@ -8,23 +8,21 @@
   </view>
 
   <!-- 原有其他内容 -->
-  <view style="text-align: center;">
-    <text class="txt">你好呀！请问想要什么样的衣服，邦妮帮你筛~</text>
-  </view>
-  <view class="image-container">
-    <image 
-      style="width: 700rpx; height: 700rpx;" 
-      src="cloud://cloud1-5gpcfxile193e298.636c-cloud1-5gpcfxile193e298-1360132582/image/gif/挥手.gif"
-      mode="aspectFit" 
-    />
-  </view>
+
   <!-- 聊天区域 -->
-  <view class="chat-container">
+  <view class="dialog-container" style="height: 1102rpx; display: block; box-sizing: border-box">
+    <view class="image-container" style="height: 270rpx; display: block; box-sizing: border-box">
+      <image 
+        style="width: 747rpx; height: 1154rpx; display: inline-block; box-sizing: border-box; left: 0rpx; top: 0rpx" 
+        src="cloud://cloud1-5gpcfxile193e298.636c-cloud1-5gpcfxile193e298-1360132582/image/gif/挥手_无背景.gif"
+        mode="aspectFit" 
+      />
+    </view>
     <scroll-view 
       class="chat-messages" 
       scroll-y 
       scroll-top="{{scrollTop}}"
-      style="height: 30vh;"
+      style="height: 1079rpx; width: 750rpx; display: block; box-sizing: border-box; position: relative; left: 0rpx; top: -270rpx"
     >
       <block wx:for="{{chatMessages}}" wx:key="index">
         <view class="message {{item.type}}">
@@ -33,8 +31,8 @@
       </block>
     </scroll-view>
 
-    <view class="chat-input">
-      <input 
+    <view class="chat-input" style="height: -52rpx; display: flex; box-sizing: border-box; position: relative; left: -1rpx; top: -275rpx">
+      <input style="position: relative; left: 20rpx; top: 0rpx" 
         class="input-field"
         placeholder="和邦妮聊天..." 
         value="{{inputMessage}}"
@@ -42,7 +40,7 @@
         bindconfirm="sendMessage"
         confirm-type="send"
       />
-      <button class="send-button" bindtap="sendMessage">发送</button>
+      <button class="send-button" bindtap="sendMessage" style="position: relative; left: 0rpx; top: -4rpx">发送</button>
     </view>
   </view>
 
