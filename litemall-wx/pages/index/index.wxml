@@ -10,10 +10,11 @@
   <!-- 原有其他内容 -->
 
   <!-- 聊天区域 -->
-  <view class="dialog-container" style="height: 1102rpx; display: block; box-sizing: border-box">
-    <view class="image-container" style="height: 270rpx; display: block; box-sizing: border-box">
+  <view class="dialog-container" style="height: 1199rpx; display: block; box-sizing: border-box">
+    <view class="image-container" style="height: 433rpx; display: block; box-sizing: border-box; width: 718rpx">
+       <text style="display: block; text-align: center; font-size: 32rpx; margin-bottom: 20rpx;">你想要什么衣物呀，邦妮帮你挑选~</text>
       <image 
-        style="width: 747rpx; height: 1154rpx; display: inline-block; box-sizing: border-box; left: 0rpx; top: 0rpx" 
+        style="width: 706rpx; height: 406rpx; display: inline-block; box-sizing: border-box; left: 12rpx; top: 14rpx; position: relative" 
         src="cloud://cloud1-5gpcfxile193e298.636c-cloud1-5gpcfxile193e298-1360132582/image/gif/挥手_无背景.gif"
         mode="aspectFit" 
       />
@@ -22,7 +23,7 @@
       class="chat-messages" 
       scroll-y 
       scroll-top="{{scrollTop}}"
-      style="height: 1079rpx; width: 750rpx; display: block; box-sizing: border-box; position: relative; left: 0rpx; top: -270rpx"
+      style="height: 627rpx; width: 750rpx; display: block; box-sizing: border-box; position: relative; left: 2rpx; top: 34rpx"
     >
       <block wx:for="{{chatMessages}}" wx:key="index">
         <view class="message {{item.type}}">
@@ -31,8 +32,8 @@
       </block>
     </scroll-view>
 
-    <view class="chat-input" style="height: -52rpx; display: flex; box-sizing: border-box; position: relative; left: -1rpx; top: -275rpx">
-      <input style="position: relative; left: 20rpx; top: 0rpx" 
+    <view class="chat-input" style="height: -52rpx; display: flex; box-sizing: border-box; position: relative; left: 2rpx; top: 4rpx">
+      <input style="position: relative; left: 20rpx; top: -8rpx" 
         class="input-field"
         placeholder="和邦妮聊天..." 
         value="{{inputMessage}}"
