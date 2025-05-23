@@ -17,18 +17,16 @@ Page({
     }
   },
   onReady: function() {
-
+    // 页面初次渲染完成时触发，此时页面节点树已构建完成，可以进行节点操作
   },
   onShow: function() {
-    // 页面显示
+    // 页面显示或从后台切回前台时触发，常用于更新页面数据
   },
   onHide: function() {
-    // 页面隐藏
-
+    // 页面隐藏或切入后台时触发，可用于暂停一些正在进行的操作
   },
   onUnload: function() {
-    // 页面关闭
-
+    // 页面卸载时触发，比如页面关闭或重定向，可用于清理资源
   },
   wxLogin: function(e) {
     if (this.data.canIUseGetUserProfile) {
@@ -60,9 +58,20 @@ Page({
         })
       }).catch((err) => {
         app.globalData.hasLogin = false;
-        util.showErrorToast('微信登录失败');
+        if (err.errMsg && err.errMsg.includes('network')) {
+          util.showErrorToast('网络异常，请检查网络设置');
+        } else {
+          wx.showModal({
+            title: '登录失败',
+            content: '是否重试？',
+            success: (res) => {
+              if (res.confirm) {
+                this.doLogin(userInfo);
+              }
+            }
+          });
+        }
       });
-
     });
   },
   accountLogin: function() {

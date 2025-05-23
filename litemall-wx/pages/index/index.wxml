@@ -28,6 +28,8 @@
       <block wx:for="{{chatMessages}}" wx:key="index">
         <view class="message {{item.type}}">
           <text>{{item.content}}</text>
+          <!-- 当消息类型为 bot 时显示跳转链接 -->
+          <navigator wx:if="{{item.type === 'bot' && item.goodsId}}" url="/pages/goods/goods?id={{item.goodsId}}" class="goods-link">查看商品</navigator>
         </view>
       </block>
     </scroll-view>

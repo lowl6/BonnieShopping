@@ -163,7 +163,7 @@ Page({
     wx.cloud.callFunction({
       name: 'chat',
       data: { message: message },
-      success: res => {
+      success: async res => { // 将回调函数标记为异步函数
         console.log('[云函数原始响应]', JSON.stringify(res, null, 2)) // 新增详细日志
         const content = res.result.code === 0 ? 
           res.result.content : '邦妮走神了，请再说一次~'
@@ -174,6 +174,80 @@ Page({
           ],
           scrollTop: 99999
         })
+           
+          // 检测并提取方括号中的内容
+     const productTags = [];
+const noMatchTags = [];
+
+if (content) {
+  // 正则表达式：匹配方括号及其内容
+  const regex = /\[([^\]]+)\]/g;
+  let match;
+  
+  while ((match = regex.exec(content)) !== null) {
+    // 提取方括号内的内容
+    const tagContent = match[1].trim();
+    
+    if (tagContent) {
+      // 仅当 productTags 中不存在该标签时才添加
+      if (!productTags.includes(tagContent)) {
+        productTags.push(tagContent);
+      }
+    } else {
+      // 仅当 noMatchTags 中不存在该空标签时才添加
+      const emptyTag = match[0];
+      if (!noMatchTags.includes(emptyTag)) {
+        noMatchTags.push(emptyTag);
+      }
+    }
+  }
+}
+    
+console.log('1. productTags 内容:', productTags);
+console.log('2. productTags 长度:', productTags.length);
+console.log('3. noMatchTags 内容:', noMatchTags);
+        
+        // 遍历商品标签，在数据库中检索商品
+        for (const tag of productTags) {
+          try {
+            // 调用数据库查询，这里需要根据实际情况修改查询逻辑
+            const db = wx.cloud.database();
+            const res = await db.collection('goods')
+              .where({
+                name: db.RegExp({
+                  regexp: tag,
+                  options: 'i',
+                })
+              })
+              .get();
+             console.log('查询成功:', res.data); // 输出匹配的文档数组
+            if (res.data.length === 0) {
+             console.log('未找到匹配数据，可能是名称或openid不匹配',tag);
+             }
+            if (res.data.length > 0) {
+              const goodsId = res.data[0]._id;
+              // 调用 bonnieSendMessage 函数
+              this.bonnieSendMessage(goodsId);
+            } else {
+              // 记录未匹配到的商品标签
+              noMatchTags.push(tag);
+            }
+          } catch (err) {
+            console.error('数据库查询失败', err);
+            noMatchTags.push(tag);
+          }
+        }
+
+        // 若有未匹配到的商品标签，让邦妮输出提示信息
+        if (noMatchTags.length > 0) {
+      const tagStr = noMatchTags.join('、');
+      // 使用模板字符串嵌入tagStr变量
+      const message = `伤心(o(╥﹏╥)o),邦妮的衣柜里暂时没有 ${tagStr}，邦妮会努力工作填满衣柜的~`;
+          this.setData({
+            chatMessages: [...this.data.chatMessages, { type: 'bot', content: message }],
+            scrollTop: this.data.scrollTop + 1000
+          });
+        }
       },
       fail: err => {
         this.setData({
@@ -193,22 +267,44 @@ Page({
     });
     
     // 调用大模型接口
-    this.callLargeModel(userMessage);
+    // this.callLargeModel(userMessage);
   },
-  async callLargeModel(userMessage) {
-    // 预留大模型接口
-    // 示例返回，实际使用时需替换为真实接口调用
-    const response = await new Promise(resolve => {
-      setTimeout(() => {
-        resolve({
-          content: '这是大模型的回复示例，实际使用时需替换为真实接口返回内容。'
-        });
-      }, 1000);
-    });
-    
+//   async callLargeModel(userMessage) {
+//     // 预留大模型接口
+//     // 示例返回，实际使用时需替换为真实接口调用
+//     const response = await new Promise(resolve => {
+//       setTimeout(() => {
+//         resolve({
+//           result: {
+//             code: 0,
+//             content: '这是大模型的回复示例，实际使用时需替换为真实接口返回内容，推荐商品 [T恤]。',
+//             products: [
+//               "白色裙子",
+//               "黄色裙子",
+//               "白色萌萌鞋",
+//               "黑色酷酷鞋"
+//             ]
+//           }
+//         });
+//       }, 1000);
+//     });
+//     this.setData({
+//       messages: [...this.data.messages, { type: 'bot', content: response.result.content }],
+//       scrollTop: this.data.scrollTop + 1000
+//     });
+
+
+//   },
+//   // 模拟邦妮发送消息
+  bonnieSendMessage(goodsId) {
+    const newMessage = {
+      type: 'bot',
+      content: '这是邦妮推荐的商品哦~',
+      goodsId: goodsId
+    };
+    console.log("goodsId:",goodsId);
     this.setData({
-      messages: [...this.data.messages, { type: 'bot', content: response.content }],
-      scrollTop: this.data.scrollTop + 1000
+      chatMessages: [...this.data.chatMessages, newMessage]
     });
   }
 })
