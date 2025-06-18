@@ -6,6 +6,7 @@ var user = require('../../utils/user.js');
 
 Page({
   data: {
+    img:'',
     canShare: false,
     id: 0,
     goods: {},
@@ -127,16 +128,23 @@ Page({
   },
 
   // 获取商品信息
-  getGoodsInfo: function() {
+  getGoodsInfo: async function() { // 添加 async 关键字
     let that = this;
-    util.request(api.GoodsDetail, {
-      id: that.data.id
-    }).then(function(res) {
-      if (res.errno === 0) {
+    const db = wx.cloud.database(); // 初始化云数据库实例
+    try {
+      // 使用精确匹配查询商品信息
+      const res = await db.collection('goods')
+        .where({
+          _id: that.data.id.toString() // 将 id 转换为字符串进行匹配
+        })
+        .get();
+      that.img=res.data[0].img;
+      if (res.data.length > 0) {
+        const data = res.data[0];
 
-        let _specificationList = res.data.specificationList;
-        let _tmpPicUrl = res.data.productList[0].url;
-        //console.log("pic: "+_tmpPicUrl);
+        let _specificationList = data.specificationList;
+        let _tmpPicUrl = data.productList[0].url;
+
         // 如果仅仅存在一种货品，那么商品页面初始化时默认checked
         if (_specificationList.length == 1) {
           if (_specificationList[0].valueList.length == 1) {
@@ -144,8 +152,8 @@ Page({
 
             // 如果仅仅存在一种货品，那么商品价格应该和货品价格一致
             // 这里检测一下
-            let _productPrice = res.data.productList[0].price;
-            let _goodsPrice = res.data.info.retailPrice;
+            let _productPrice = data.productList[0].price;
+            let _goodsPrice = data.info.retailPrice;
             if (_productPrice != _goodsPrice) {
               console.error('商品数量价格和货品不一致');
             }
@@ -156,43 +164,26 @@ Page({
             });
           }
         }
-        res.data.info.path = "pages/goods/goods?id=" + that.data.id
+        data.info.path = "pages/goods/goods?id=" + that.data.id
 
         that.setData({
-          goods: res.data.info,
-          attribute: res.data.attribute,
-          issueList: res.data.issue,
-          comment: res.data.comment,
-          brand: res.data.brand,
-          specificationList: res.data.specificationList,
-          productList: res.data.productList,
-          userHasCollect: res.data.userHasCollect,
-          shareImage: res.data.shareImage,
-          checkedSpecPrice: res.data.info.retailPrice,
-          groupon: res.data.groupon,
-          canShare: res.data.share,
+          goods: data.info,
+          attribute: data.attribute,
+          issueList: data.issue,
+          comment: data.comment,
+          brand: data.brand,
+          specificationList: data.specificationList,
+          productList: data.productList,
+          userHasCollect: data.userHasCollect,
+          shareImage: data.shareImage,
+          checkedSpecPrice: data.info.retailPrice,
+          groupon: data.groupon,
+          canShare: data.share,
           //选择规格时，默认展示第一张图片
           tmpPicUrl: _tmpPicUrl
-        });
+        }); 
 
-        
-        //如果是通过分享的团购参加团购，则团购项目应该与分享的一致并且不可更改
-        if (that.data.isGroupon) {
-          let groupons = that.data.groupon;
-          for (var i = 0; i < groupons.length; i++) {
-            if (groupons[i].id != that.data.grouponLink.rulesId) {
-              groupons.splice(i, 1);
-            }
-          }
-          groupons[0].checked = true;
-          //重设团购规格
-          that.setData({
-            groupon: groupons
-          });
-
-        }
-
-        if (res.data.userHasCollect == 1) {
+        if (data.userHasCollect == 1) {
           that.setData({
             collect: true
           });
@@ -202,11 +193,15 @@ Page({
           });
         }
 
-        WxParse.wxParse('goodsDetail', 'html', res.data.info.detail, that);
+        WxParse.wxParse('goodsDetail', 'html', data.info.detail, that);
         //获取推荐商品
         that.getGoodsRelated();
+      } else {
+        console.error('未找到对应商品信息');
       }
-    });
+    } catch (err) {
+      console.error('获取商品数据失败', err);
+    }
   },
 
   // 获取推荐商品
@@ -422,7 +417,7 @@ Page({
       });
       this.getGoodsInfo();
     }
-
+    
     if (options.grouponId) {
       this.setData({
         isGroupon: true,
