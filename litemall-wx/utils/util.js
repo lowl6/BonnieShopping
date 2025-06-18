@@ -25,7 +25,7 @@ function formatNumber(n) {
 function request(url, data = {}, method = "GET") {
   return new Promise(function(resolve, reject) {
     wx.request({
-      url: url,
+      url: '',
       data: data,
       method: method,
       header: {

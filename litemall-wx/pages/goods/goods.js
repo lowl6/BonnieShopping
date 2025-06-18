@@ -6,7 +6,6 @@ var user = require('../../utils/user.js');
 
 Page({
   data: {
-    img:'',
     canShare: false,
     id: 0,
     goods: {},
@@ -128,82 +127,84 @@ Page({
   },
 
   // 获取商品信息
-  getGoodsInfo: async function() { // 添加 async 关键字
+  getGoodsInfo: function() {
     let that = this;
-    const db = wx.cloud.database(); // 初始化云数据库实例
-    try {
-      // 使用精确匹配查询商品信息
-      const res = await db.collection('goods')
-        .where({
-          _id: that.data.id.toString() // 将 id 转换为字符串进行匹配
-        })
-        .get();
-      that.img=res.data[0].img;
-      if (res.data.length > 0) {
-        const data = res.data[0];
-
-        let _specificationList = data.specificationList;
-        let _tmpPicUrl = data.productList[0].url;
-
-        // 如果仅仅存在一种货品，那么商品页面初始化时默认checked
-        if (_specificationList.length == 1) {
-          if (_specificationList[0].valueList.length == 1) {
-            _specificationList[0].valueList[0].checked = true
-
-            // 如果仅仅存在一种货品，那么商品价格应该和货品价格一致
-            // 这里检测一下
-            let _productPrice = data.productList[0].price;
-            let _goodsPrice = data.info.retailPrice;
-            if (_productPrice != _goodsPrice) {
-              console.error('商品数量价格和货品不一致');
-            }
-
-            that.setData({
-              checkedSpecText: _specificationList[0].valueList[0].value,
-              tmpSpecText: '已选择：' + _specificationList[0].valueList[0].value
-            });
+    const db = wx.cloud.database();
+    console.log("getGoodInfo: id:", that.data.id);
+    db.collection('goods').doc(String(that.data.id)).get({
+      success: function (res) {
+        console.log('查询成功:', res.data);
+        const data = res.data;
+  
+        let _specificationList = data.specificationList || [];
+        let _tmpPicUrl = data.productList?.[0]?.url || '';
+  
+        // 默认规格
+        if (_specificationList.length === 1 && _specificationList[0].valueList.length === 1) {
+          _specificationList[0].valueList[0].checked = true;
+  
+          let _productPrice = data.productList?.[0]?.price || 0;
+          let _goodsPrice = data.retailPrice;
+          if (_productPrice !== _goodsPrice) {
+            console.error('商品价格与货品价格不一致');
+          }
+  
+          that.setData({
+            checkedSpecText: _specificationList[0].valueList[0].value,
+            tmpSpecText: '已选择：' + _specificationList[0].valueList[0].value
+          });
+        }
+  
+        data.path = "pages/goods/goods?id=" + that.data.id;
+  
+        // WxParse 渲染 detail 字段
+        let htmlDetail = '';
+        if (Array.isArray(data.detail)) {
+          htmlDetail = data.detail.map(url => `<img src="${url}" style="width: 100%;" />`).join('');
+        } else {
+          htmlDetail = data.detail || '';
+        }
+        console.log("htmlDetail:", htmlDetail);
+        WxParse.wxParse('goodsDetail', 'html', htmlDetail, that);
+  
+        // 设置页面数据
+        that.setData({
+          goods: data,
+          attribute: data.attribute || [],
+          issueList: data.issue || [],
+          comment: data.comment || {},
+          brand: data.brand || {},
+          specificationList: data.specificationList || [],
+          productList: data.productList || [],
+          userHasCollect: data.userHasCollect || 0,
+          shareImage: data.shareImage || '',
+          checkedSpecPrice: data.retailPrice || 0,
+          groupon: data.groupon || [],
+          canShare: data.share || false,
+          tmpPicUrl: _tmpPicUrl
+        });
+  
+        // 如果是团购分享
+        if (that.data.isGroupon) {
+          let groupons = that.data.groupon;
+          groupons = groupons.filter(item => item.id == that.data.grouponLink.rulesId);
+          if (groupons.length > 0) {
+            groupons[0].checked = true;
+            that.setData({ groupon: groupons });
           }
         }
-        data.info.path = "pages/goods/goods?id=" + that.data.id
-
+  
+        // 收藏状态
         that.setData({
-          goods: data.info,
-          attribute: data.attribute,
-          issueList: data.issue,
-          comment: data.comment,
-          brand: data.brand,
-          specificationList: data.specificationList,
-          productList: data.productList,
-          userHasCollect: data.userHasCollect,
-          shareImage: data.shareImage,
-          checkedSpecPrice: data.info.retailPrice,
-          groupon: data.groupon,
-          canShare: data.share,
-          //选择规格时，默认展示第一张图片
-          tmpPicUrl: _tmpPicUrl
-        }); 
-
-        if (data.userHasCollect == 1) {
-          that.setData({
-            collect: true
-          });
-        } else {
-          that.setData({
-            collect: false
-          });
-        }
-
-        WxParse.wxParse('goodsDetail', 'html', data.info.detail, that);
-        //获取推荐商品
+          collect: data.userHasCollect == 1
+        });
+  
+        // 获取推荐商品
         that.getGoodsRelated();
-      } else {
-        console.error('未找到对应商品信息');
       }
-    } catch (err) {
-      console.error('获取商品数据失败', err);
-    }
+    });
   },
-
+  
   // 获取推荐商品
   getGoodsRelated: function() {
     let that = this;
@@ -417,7 +418,7 @@ Page({
       });
       this.getGoodsInfo();
     }
-    
+
     if (options.grouponId) {
       this.setData({
         isGroupon: true,
@@ -657,6 +658,28 @@ Page({
   onReady: function() {
     // 页面渲染完成
 
-  }
+  },
+  copyTaobaoLink: function () {
+    const url = this.data.goods.taobaoUrl;
+    if (!url) {
+      wx.showToast({
+        title: '未找到商品链接',
+        icon: 'none'
+      });
+      return;
+    }
 
+    wx.setClipboardData({
+      data: url,
+      success: () => {
+        wx.showModal({
+          title: '提示',
+          content: '淘宝链接已复制，请打开淘宝 App 查看商品。',
+          showCancel: false
+        });
+      }
+    });
+  }
 })
+
+
