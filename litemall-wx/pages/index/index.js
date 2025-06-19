@@ -226,8 +226,9 @@ console.log('3. noMatchTags 内容:', noMatchTags);
              }
             if (res.data.length > 0) {
               const goodsId = res.data[0]._id;
+              const goodsName = res.data[0].name;
               // 调用 bonnieSendMessage 函数
-              this.bonnieSendMessage(goodsId);
+              this.bonnieSendMessage(goodsId,goodsName);
             } else {
               // 记录未匹配到的商品标签
               noMatchTags.push(tag);
@@ -296,10 +297,10 @@ console.log('3. noMatchTags 内容:', noMatchTags);
 
 //   },
 //   // 模拟邦妮发送消息
-  bonnieSendMessage(goodsId) {
+  bonnieSendMessage(goodsId,goodsName) {
     const newMessage = {
       type: 'bot',
-      content: '这是邦妮推荐的商品哦~',
+      content: '这是邦妮推荐的商品'+goodsName+'哦~',
       goodsId: goodsId
     };
     console.log("goodsId:",goodsId);
