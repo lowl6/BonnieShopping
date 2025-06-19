@@ -553,34 +553,40 @@ Page({
   //添加到购物车
   addToCart: function() {
     var that = this;
+   
+
     if (this.data.openAttr == false) {
       //打开规格选择窗口
       this.setData({
         openAttr: !this.data.openAttr
       });
     } else {
-
+       // 检查用户是否登录
+    if (!app.globalData.hasLogin) {
+      wx.showModal({
+        title: '提示',
+        content: '请先登录',
+        success: function (res) {
+          if (res.confirm) {
+            wx.navigateTo({
+              url: '/pages/auth/login/login'
+            });
+          }
+        }
+      });
+      return;
+    }
       //提示选择完整规格
       if (!this.isCheckedAllSpec()) {
         util.showErrorToast('请选择完整规格');
         return false;
       }
-
+        
       //根据选中的规格，判断是否有对应的sku信息
       let checkedProductArray = this.getCheckedProductItem(this.getCheckedSpecKey());
-      if (!checkedProductArray || checkedProductArray.length <= 0) {
-        //找不到对应的product信息，提示没有库存
-        util.showErrorToast('没有库存');
-        return false;
-      }
 
       let checkedProduct = checkedProductArray[0];
       //验证库存
-      if (checkedProduct.number <= 0) {
-        util.showErrorToast('没有库存');
-        return false;
-      }
-
       //添加到购物车
       util.request(api.CartAdd, {
           goodsId: this.data.goods.id,

@@ -157,13 +157,6 @@
         </view>
       </view>
 
-      <view class="spec-item" wx:if="{{groupon.length > 0}}">
-        <view class="name">团购立减</view>
-        <view class="values">
-          <view class="value {{vitem.checked ? 'selected' : ''}}" bindtap="clickGroupon" wx:for="{{groupon}}" wx:for-item="vitem" wx:key="{{vitem.id}}" data-value-id="{{vitem.id}}" data-name="{{vitem.specification}}">￥{{vitem.discount}} ({{vitem.discountMember}}人)</view>
-        </view>
-      </view>
-
       <!-- 数量 -->
       <view class="number-item">
         <view class="name">数量</view>
@@ -196,7 +189,6 @@
       <van-icon bindtap="openCartPage" class="icon" name="cart-o" />
     </view>
   </view>
-  <view class="r" bindtap="copyTaobaoLink" wx:if="{{!soldout && !isGroupon}}">加入购物车</view>
-  <view class="c" bindtap="addFast" wx:if="{{!soldout}}">{{isGroupon?'参加团购':'立即购买'}}</view>
-  <view class="n" wx:if="{{soldout}}">商品已售空</view>
+  <view class="r" bindtap="addToCart" >加入购物车</view>
+  <view class="c" bindtap="copyTaobaoLink" >{{isGroupon?'参加团购':'复制淘宝链接'}}</view>
 </view>
